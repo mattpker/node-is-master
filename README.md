@@ -15,8 +15,8 @@ Use cases for this module:
 
 ## Usage
 
-    var mongoose = require('../node_modules/mongoose');
-    var im = require('../is-master.js');
+    var mongoose = require('mongoose');
+    var im = require('is-master');
 
     // Start the mongoose db connection
     mongoose.connect('mongodb://127.0.0.1:27017/im', function(err) {
