@@ -1,0 +1,38 @@
+{
+  "name": "is-master",
+  "version": "1.0.0",
+  "description": "Find the master node process in a multi server cluster.",
+  "main": "is-master.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattpker/node-is-master"
+  },
+  "keywords": [
+    "cluster",
+    "master",
+    "multi",
+    "server",
+    "isMaster",
+    "isSlave",
+    "heartbeat"
+  ],
+  "author": "Matt Atkinson <mattpker@gmail.com> (https://github.com/mattpker)",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/mattpker/node-is-master/blob/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/mattpker/node-is-master/issues"
+  },
+  "homepage": "https://github.com/mattpker/node-is-master",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "mongoose": "^3.8.22"
+  }
+}
