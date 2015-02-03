@@ -3,13 +3,15 @@ is-master
 
 Find the master node process in a multi server cluster.
 
-This module finds the master node in a cluster by inserting the node in a mongodb and choosing the master by which node is the oldest. Each node checks into mongodb on a set time (default 1 minute). If the master node dies for whatever reason, mongodb will expire the record and the next node in line will become the master.
+This module finds the master node in a cluster by inserting the nodes in a mongodb and choosing the master by which node is the oldest. Each node checks into mongodb on a set timeout (default 1 minute). If the master node dies for whatever reason, mongodb will expire the record and the next node in line will become the master.
 
-Use cases for this module are if you run your node cluster with a cluster manager like PM2 or even if you run your clusters on multiple servers (they just need to all report into the same mongodb). This will allow you to assign one node process as the master so that it can run tasks that should only be ran by one process, such as scheduled tasks and database cleanup.
+Use cases for this module:
+* If you run your node cluster with a cluster manager like PM2 or even if you run your clusters on multiple servers (they just need to all report into the same mongodb), you can find which node process is the master.
+* This will allow you to assign one node process as the master so that it can run tasks that should only be ran by one process, such as scheduled tasks and database cleanup.
 
 ## Installation
 
-  npm install is-master --save
+    npm install is-master
 
 ## Usage
 
@@ -52,7 +54,7 @@ A. 60 seconds is added to the mongodb expire timeout to ensure the master has ti
 
 ## Tests
 
-  npm test
+    npm test
 
 ## Contributing
 
