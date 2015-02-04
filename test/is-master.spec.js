@@ -14,7 +14,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/im', function(err) {
 
 describe("is-master", function() {
     it("should start the worker", function(done) {
-        im.start();
+        im.start({
+            collection: 'testcol',
+            hostname: 'testhost',
+            timeout: 120
+        });
         done();
     });
     it("should return if it is the master", function(done) {

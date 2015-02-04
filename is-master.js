@@ -13,6 +13,7 @@ function im() {
  * Sets the default variables
  */
 im.prototype = {
+    collection: 'node',
     hostname: os.hostname(),
     pid: process.pid,
     versions: process.versions,
@@ -72,7 +73,7 @@ im.prototype.mongooseInit = function() {
         }
     });
 
-    this.imModel = mongoose.model('node', imSchema);
+    this.imModel = mongoose.model(this.collection, imSchema);
     this.worker = new this.imModel({
         hostname: this.hostname,
         pid: this.pid,

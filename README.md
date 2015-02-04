@@ -3,7 +3,7 @@ is-master
 
 Find the master node process in a multi server cluster.
 
-This module finds the master node in a cluster by inserting the nodes in a mongodb and choosing the master by which node is the oldest. Each node checks into mongodb on a set timeout (default 1 minute). If the master node dies for whatever reason, mongodb will expire the record and the next node in line will become the master.
+This module finds the master node in a cluster by inserting the nodes in a mongodb and choosing the master by which node is the oldest. Each node checks into mongodb on a set timeout (default 1 minute). If the master node dies for whatever reason, mongodb will expire the record and the next node in line will become the master. Mongoose and a connection to a mongodb database is REQUIRED for is-master to work.
 
 Use cases for this module:
 * If you run your node cluster with a cluster manager like PM2 or even if you run your clusters on multiple servers (they just need to all report into the same mongodb), you can find which node process is the master.
@@ -39,11 +39,12 @@ Use cases for this module:
 
 ## Options
 
-When starting the worker, you can specify option in an object to update the default values.
+When starting the worker, you can specify options in an object to update the default values.
 
     im.start({
-        timeout: 120, // This value is in seconds
-        hostname: 'devServer1'
+        timeout: 120, // How often the nodes check into the database. This value is in seconds, default 60.
+        hostname: 'devServer1', // Sets the hostname of the node, without this value it will get the hostname using os.hostname.
+        collection: 'proc' // The mongodb collection is-master will use. Please note that by default mongoose adds an 's' to the end to make it plural. Default value is 'node'.
     });
 
 ## FAQ
