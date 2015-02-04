@@ -1,6 +1,8 @@
 is-master
 =========
 
+[![Build Status](https://travis-ci.org/mattpker/node-is-master.svg)](https://travis-ci.org/mattpker/node-is-master) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattpker/node-is-master?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Find the master node process in a multi server cluster.
 
 This module finds the master node in a cluster by inserting the nodes in a mongodb and choosing the master by which node is the oldest. Each node checks into mongodb on a set timeout (default 1 minute). If the master node dies for whatever reason, mongodb will expire the record and the next node in line will become the master. Mongoose and a connection to a mongodb database is REQUIRED for is-master to work.
