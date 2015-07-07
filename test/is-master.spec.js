@@ -1,18 +1,25 @@
 'use strict';
 
-var expect = require("../node_modules/chai").expect;
+var chai = require("../node_modules/chai");
+var expect = chai.expect;
 var mongoose = require('../node_modules/mongoose');
-var im = require('../is-master.js');
+var mongooseMock = require('mongoose-mock');
+var proxyquire = require('proxyquire');
+var sinon = require('sinon');
+var sinonChai = require("sinon-chai");
 
-// Bootstrap db connection
-mongoose.connect('mongodb://127.0.0.1:27017/im', function(err) {
-    if (err) {
-        console.error('\x1b[31m', 'Could not connect to MongoDB!');
-        throw (err);
-    }
-});
+chai.use(sinonChai);
 
 describe("is-master", function() {
+
+    var im;
+
+    beforeEach(function() {
+        im = proxyquire('../is-master.js', {
+            'mongoose': mongooseMock
+        });
+    });
+
     it("should start the worker", function(done) {
         im.start({
             collection: 'testcol',
