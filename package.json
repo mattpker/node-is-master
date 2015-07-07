@@ -32,11 +32,9 @@
   "homepage": "https://github.com/mattpker/node-is-master",
   "devDependencies": {
     "chai": "^1.10.0",
-    "install": "^0.1.8",
     "mocha": "^2.1.0",
     "mongoose": "^4.0.6",
     "mongoose-mock": "^0.4.0",
-    "npm": "^2.12.1",
     "proxyquire": "^1.6.0",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
