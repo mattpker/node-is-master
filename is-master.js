@@ -73,7 +73,13 @@ im.prototype.mongooseInit = function() {
         }
     });
 
-    this.imModel = mongoose.model(this.collection, imSchema);
+    // ensure we aren't attempting to redefine a collection that already exists
+    if(mongoose.models.hasOwnProperty(this.collection)){
+        this.imModel = mongoose.model(this.collection);
+    }else{
+        this.imModel = mongoose.model(this.collection, imSchema);
+    }
+
     this.worker = new this.imModel({
         hostname: this.hostname,
         pid: this.pid,
