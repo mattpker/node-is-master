@@ -116,6 +116,8 @@ im.prototype.startWorker = function() {
                 memory: process.memoryUsage(),
                 uptime: process.uptime(),
                 updateDate: new Date()
+            }, {
+                upsert: true // handle event where document was deleted
             }, function(err, results) {
                 if (err) return console.error(err);
             });
@@ -137,7 +139,10 @@ im.prototype.isMaster = function(callback) {
             }
         }, function(err, results) {
             if (err) return callback(err);
-            if (results._id.toString() === _this.id.toString()) {
+
+            if(!results){
+              return callback(err, false);
+            } else if (results._id.toString() === _this.id.toString()) {
                 callback(err, true);
             } else {
                 callback(err, false);
