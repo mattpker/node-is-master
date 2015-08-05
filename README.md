@@ -66,6 +66,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+* 1.1.4 Better performance and resliancy in high-concurrency settings
 * 1.1.3 Fixed issue #4
 * 1.1.2 Removed unnecessary dev dependencies
 * 1.1.1 Fixed the tests to mock mongoose
