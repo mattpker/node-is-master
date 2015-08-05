@@ -66,7 +66,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
-* 1.1.4 Better performance and resliancy in high-concurrency settings ([#5](https://github.com/mattpker/node-is-master/pull/6), Thanks to @bendalton
+* 1.1.4 Better performance and resliancy in high-concurrency settings ([#5](https://github.com/mattpker/node-is-master/pull/6), Thanks to @bendalton)
 * 1.1.3 Fixed critical infinite loop when there are duplicate start dates, resulting in elevated CPU and rapid log growth. All users are urged to upgrade. ([#4](https://github.com/mattpker/node-is-master/issues/4), Thanks to @markstos)
 * 1.1.2 Removed unnecessary dev dependencies
 * 1.1.1 Fixed the tests to mock mongoose
