@@ -93,9 +93,8 @@ im.prototype.startWorker = function() {
     this.worker.save(function(err, worker) {
         if (err) {
             if (err.code === 11000) {
-                console.error(err);
-                _this.startDate = new Date();
-                _this.updateDate = new Date();
+                _this.worker.startDate = new Date();
+                _this.worker.updateDate = new Date();
                 return _this.startWorker();
             } else {
                 throw err;
