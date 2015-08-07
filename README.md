@@ -15,29 +15,58 @@ Use cases for this module:
 
     npm install is-master
 
-## Usage
+## Usage / Examples
+```
+'use strict';
 
-    var mongoose = require('mongoose');
-    var im = require('is-master');
+var mongoose = require('../node_modules/mongoose');
+var im = require('../is-master.js');
 
-    // Start the mongoose db connection
-    mongoose.connect('mongodb://127.0.0.1:27017/im', function(err) {
-        if (err) {
-            console.error('\x1b[31m', 'Could not connect to MongoDB!');
-            throw (err);
-        }
+// Start the mongoose db connection
+mongoose.connect('mongodb://127.0.0.1:27017/im', function(err) {
+    if (err) {
+        console.error('\x1b[31m', 'Could not connect to MongoDB!');
+        throw (err);
+    }
+});
+
+// Start the is-master worker
+im.start();
+
+// Check if this current process is the master using the callback method
+setInterval(function() {
+    im.isMaster(function(err, results) {
+        if (err) return console.error(err);
+        console.log('Callback master: ', results);
     });
+}, 5000);
 
-    // Start the is-master worker
-    im.start();
+// Check if this current process is the master using the im.master method, this method only updates every time the process checks in
+setInterval(function() {
+        console.log('Variable master: ', im.master);
+}, 5000);
 
-    // Check if this current process is the master every 5 seconds
-    setInterval(function() {
-        im.isMaster(function(err, results) {
-            if (err) return console.error(err);
-            console.log(results);
-        });
-    }, 5000);
+// Event emmiters that you can listen for
+im.on('connected', function() {
+    console.log('The is-master worker has connected and insterted into mongodb.');
+});
+
+im.on('synced', function() {
+    console.log('The is-master worker has synced to mongodb.');
+});
+
+im.on('changed', function() {
+    console.log('The master variable has changed');
+});
+
+im.on('master', function() {
+    console.log('The process has been promoted to master');
+});
+
+im.on('slave', function(){
+    console.log('The process has been demoted to slave');
+});
+```
 
 ## Options
 
@@ -66,6 +95,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+* 1.2.0 Added EventEmitter's for more functionality
 * 1.1.4 Better performance and resliancy in high-concurrency settings ([#5](https://github.com/mattpker/node-is-master/pull/6), Thanks to @bendalton)
 * 1.1.3 Fixed critical infinite loop when there are duplicate start dates, resulting in elevated CPU and rapid log growth. All users are urged to upgrade. ([#4](https://github.com/mattpker/node-is-master/issues/4), Thanks to @markstos)
 * 1.1.2 Removed unnecessary dev dependencies

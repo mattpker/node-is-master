@@ -3,26 +3,29 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     util = require('util'),
+    EventEmitter = require("events").EventEmitter,
     os = require('os');
 
 function im() {
-
+    EventEmitter.call(this);
 }
+
+// Inherit the EventEmitter into our im prototype
+util.inherits(im, EventEmitter);
 
 /**
  * Sets the default variables
  */
-im.prototype = {
-    collection: 'node',
-    hostname: os.hostname(),
-    pid: process.pid,
-    versions: process.versions,
-    id: null,
-    timeout: 60
-};
+im.prototype.master = false;
+im.prototype.collection = 'node';
+im.prototype.hostname = os.hostname();
+im.prototype.pid = process.pid;
+im.prototype.versions = process.versions;
+im.prototype.id = null;
+im.prototype.timeout = 60;
 
 /**
- * Function initializes options, does some basic option verification and starts CusterMgr
+ * Function initializes options, does some basic option verification and starts is-master
  */
 im.prototype.start = function(options) {
     if (options) {
@@ -74,9 +77,9 @@ im.prototype.mongooseInit = function() {
     });
 
     // ensure we aren't attempting to redefine a collection that already exists
-    if(mongoose.models.hasOwnProperty(this.collection)){
+    if (mongoose.models.hasOwnProperty(this.collection)) {
         this.imModel = mongoose.model(this.collection);
-    }else{
+    } else{
         this.imModel = mongoose.model(this.collection, imSchema);
     }
 
@@ -107,21 +110,52 @@ im.prototype.startWorker = function() {
             }
         }
         _this.id = worker._id;
-        // Update this node in the cluster every x timeout
-        setInterval(function() {
-            _this.imModel.update({
-                _id: _this.id
-            }, {
-                memory: process.memoryUsage(),
-                uptime: process.uptime(),
-                updateDate: new Date()
-            }, {
-                upsert: true // handle event where document was deleted
-            }, function(err, results) {
-                if (err) return console.error(err);
-            });
-        }, _this.timeout * 1000);
+        _this.isMaster(function(err, results) {
+            if (err) return console.error(err);
+            _this.master = results;
+            _this.emit('connected');
+            if (_this.master) {
+                _this.emit('master');
+            } else {
+                _this.emit('slave');
+            }
+            _this.process();
+        });
     });
+};
+
+/**
+ * Function that runs the worker that checks in whith the DB
+ */
+im.prototype.process = function() {
+    var _this = this;
+    // Update this node in the cluster every x timeout
+    setInterval(function() {
+        _this.imModel.update({
+            _id: _this.id
+        }, {
+            memory: process.memoryUsage(),
+            uptime: process.uptime(),
+            updateDate: new Date()
+        }, {
+            upsert: true // handle event where document was deleted
+        }, function(err, results) {
+            if (err) return console.error(err);
+            _this.emit('synced');
+            _this.isMaster(function (err, results) {
+                if (err) return console.error(err);
+                if (results !== _this.master) {
+                    _this.master = results;
+                    _this.emit('changed');
+                    if (_this.master) {
+                        _this.emit('master');
+                    } else {
+                        _this.emit('slave');
+                    }
+                }
+            });
+        });
+    }, _this.timeout * 1000);
 };
 
 /**
