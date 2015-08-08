@@ -84,6 +84,10 @@ Q. I updated the timeout option, but mongodb is not expiring the node in that ti
 
 A. 60 seconds is added to the mongodb expire timeout to ensure the master has time to checkin. Also please note, if this value is changed from the initial creation of the table, it will not be able to update the index. You will need to delete the table and then restart your server to re-create it.
 
+## More info
+
+http://mattpker.com/2015/08/07/How-to-schedule-jobs-in-NodeJS/
+
 ## Tests
 
     npm test
@@ -95,6 +99,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+* 1.2.1 Added blog posting to README.md for more information
 * 1.2.0 Added EventEmitter's for more functionality
 * 1.1.4 Better performance and resliancy in high-concurrency settings ([#5](https://github.com/mattpker/node-is-master/pull/6), Thanks to @bendalton)
 * 1.1.3 Fixed critical infinite loop when there are duplicate start dates, resulting in elevated CPU and rapid log growth. All users are urged to upgrade. ([#4](https://github.com/mattpker/node-is-master/issues/4), Thanks to @markstos)
