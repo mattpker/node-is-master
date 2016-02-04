@@ -143,7 +143,8 @@ im.prototype.process = function() {
             uptime: process.uptime(),
             updateDate: new Date()
         }, {
-            upsert: true // handle event where document was deleted
+            upsert: true, // handle event where document was deleted
+            setDefaultsOnInsert: true, // on insert, make sure to set default values
         }, function(err, results) {
             if (err) return console.error(err);
             _this.emit('synced');
