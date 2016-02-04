@@ -1,6 +1,6 @@
 {
   "name": "is-master",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Find the master node process in a multi server cluster.",
   "main": "is-master.js",
   "scripts": {
