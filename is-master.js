@@ -64,12 +64,14 @@ im.prototype.mongooseInit = function() {
         },
         startDate: {
             type: Date,
+            default: Date.now,
             index: {
                 unique: true
             }
         },
         updateDate: {
             type: Date,
+            default: Date.now,
             index: {
                 expires: this.timeout + 60
             }
@@ -134,11 +136,15 @@ im.prototype.process = function() {
         _this.imModel.update({
             _id: _this.id
         }, {
+            hostname: _this.hostname,
+            pid: _this.pid,
+            versions: _this.versions,
             memory: process.memoryUsage(),
             uptime: process.uptime(),
             updateDate: new Date()
         }, {
-            upsert: true // handle event where document was deleted
+            upsert: true, // handle event where document was deleted
+            setDefaultsOnInsert: true, // on insert, make sure to set default values
         }, function(err, results) {
             if (err) return console.error(err);
             _this.emit('synced');

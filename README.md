@@ -99,6 +99,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+* 1.2.2 Fix [#11](https://github.com/mattpker/node-is-master/issues/11), issue with inserts/upserts duplicate key errors
 * 1.2.1 Added blog posting to README.md for more information
 * 1.2.0 Added EventEmitter's for more functionality
 * 1.1.4 Better performance and resliancy in high-concurrency settings ([#5](https://github.com/mattpker/node-is-master/pull/6), Thanks to @bendalton)
