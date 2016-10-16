@@ -23,16 +23,21 @@ im.prototype.pid = process.pid;
 im.prototype.versions = process.versions;
 im.prototype.id = null;
 im.prototype.timeout = 60;
+im.prototype.expiry = 120;
+
+var parseables = ['timeout', 'expiry'];
 
 /**
  * Function initializes options, does some basic option verification and starts is-master
  */
 im.prototype.start = function(options) {
     if (options) {
-        if (options.timeout) {
-            options.timeout = parseInt(options.timeout, 10);
-            if (isNaN(options.timeout)) throw 'im: timeout is not a number!';
-        }
+        parseables.forEach(function(key) {
+          if (options[key]) {
+              options[key] = parseInt(options[key], 10);
+              if (isNaN(options[key])) throw 'im: ' + key + ' is not a number!';
+          }
+        })
 
         util._extend(this, options);
     }
@@ -73,7 +78,7 @@ im.prototype.mongooseInit = function() {
             type: Date,
             default: Date.now,
             index: {
-                expires: this.timeout + 60
+                expires: this.expiry
             }
         }
     });
@@ -127,7 +132,7 @@ im.prototype.startWorker = function() {
 };
 
 /**
- * Function that runs the worker that checks in whith the DB
+ * Function that runs the worker that checks in with the DB
  */
 im.prototype.process = function() {
     var _this = this;

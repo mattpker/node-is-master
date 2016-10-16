@@ -74,6 +74,7 @@ When starting the worker, you can specify options in an object to update the def
 
     im.start({
         timeout: 120, // How often the nodes check into the database. This value is in seconds, default 60.
+        expiry: 60, // How long that after the `updateTime` that a record will remain unexpired by mongodb. This value is in seconds, default 120.
         hostname: 'devServer1', // Sets the hostname of the node, without this value it will get the hostname using os.hostname.
         collection: 'proc' // The mongodb collection is-master will use. Please note that by default mongoose adds an 's' to the end to make it plural. Default value is 'node'.
     });
