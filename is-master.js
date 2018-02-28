@@ -23,6 +23,7 @@ im.prototype.pid = process.pid;
 im.prototype.versions = process.versions;
 im.prototype.id = null;
 im.prototype.timeout = 60;
+im.prototype.mongooseConnection = null;
 
 /**
  * Function initializes options, does some basic option verification and starts is-master
@@ -79,10 +80,11 @@ im.prototype.mongooseInit = function() {
     });
 
     // ensure we aren't attempting to redefine a collection that already exists
-    if (mongoose.models.hasOwnProperty(this.collection)) {
-        this.imModel = mongoose.model(this.collection);
+    var mc = (this.mongooseConnection) ? this.mongooseConnection: mongoose;
+    if (mc.models.hasOwnProperty(this.collection)) {
+        this.imModel = mc.model(this.collection);
     } else{
-        this.imModel = mongoose.model(this.collection, imSchema);
+        this.imModel = mc.model(this.collection, imSchema);
     }
 
     this.worker = new this.imModel({
