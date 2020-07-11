@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "description": "Find the master node process in a multi server cluster.",
   "main": "is-master.js",
+  "types": "is-master.d.ts",
   "scripts": {
     "test": "mocha"
   },
