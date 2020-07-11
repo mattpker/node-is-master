@@ -134,7 +134,7 @@ im.prototype.process = function() {
     var _this = this;
     // Update this node in the cluster every x timeout
     setInterval(function() {
-        _this.imModel.update({
+        _this.imModel.updateOne({
             _id: _this.id
         }, {
             hostname: _this.hostname,
