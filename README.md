@@ -60,8 +60,8 @@ im.on('master', function() {
     console.log('The process has been promoted to master');
 });
 
-im.on('slave', function(){
-    console.log('The process has been demoted to slave');
+im.on('secondary', function(){
+    console.log('The process has been demoted to secondary');
 });
 ```
 
@@ -80,6 +80,12 @@ When starting the worker, you can specify options in an object to update the def
 Q. I updated the timeout option, but mongodb is not expiring the node in that timeout specified.
 
 A. 60 seconds is added to the mongodb expire timeout to ensure the master has time to checkin. Also please note, if this value is changed from the initial creation of the table, it will not be able to update the index. You will need to delete the table and then restart your server to re-create it.
+
+
+## Compatibility
+
+For backward compatibility, the `secondary` event is also emitted with the historical name `slave`.
+This maybe removed in a future release.
 
 ## More info
 

@@ -16,7 +16,7 @@
     "multi",
     "server",
     "isMaster",
-    "isSlave",
+    "isSecondary",
     "heartbeat"
   ],
   "author": "Matt Atkinson <mattpker@gmail.com> (https://github.com/mattpker)",

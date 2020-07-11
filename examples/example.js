@@ -44,6 +44,6 @@ im.on('master', function() {
     console.log('The process has been promoted to master');
 });
 
-im.on('slave', function(){
-    console.log('The process has been demoted to slave');
+im.on('secondary', function(){
+    console.log('The process has been demoted to secondary');
 });

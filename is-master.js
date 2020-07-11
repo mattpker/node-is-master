@@ -120,6 +120,7 @@ im.prototype.startWorker = function() {
                 _this.emit('master');
             } else {
                 _this.emit('slave');
+                _this.emit('secondary');
             }
             _this.process();
         });
@@ -157,6 +158,7 @@ im.prototype.process = function() {
                         _this.emit('master');
                     } else {
                         _this.emit('slave');
+                        _this.emit('secondary');
                     }
                 }
             });
