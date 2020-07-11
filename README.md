@@ -102,6 +102,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Release History
 
+* 1.3.0 Deprecating slave terminolgy for secondary [#18](https://github.com/mattpker/node-is-master/pull/18), mongoose security update [#19](https://github.com/mattpker/node-is-master/pull/19), and fix for mongoose deprecation warnings [#17](https://github.com/mattpker/node-is-master/pull/17)
 * 1.2.2 Fix [#11](https://github.com/mattpker/node-is-master/issues/11), issue with inserts/upserts duplicate key errors
 * 1.2.1 Added blog posting to README.md for more information
 * 1.2.0 Added EventEmitter's for more functionality
