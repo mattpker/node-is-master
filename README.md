@@ -1,3 +1,5 @@
+:warning: **This repo and npm package have been deprecated in favor of using https://github.com/caub/node-is-primary (https://www.npmjs.com/package/is-primary).**
+
 is-master
 =========
 Find the master node process in a multi server cluster.
